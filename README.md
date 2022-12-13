@@ -20,7 +20,7 @@ https://github.com/iTXTech/mirai-console-loader/releases
 
 4.关闭再次运行。会在config\net.mamoe.mirai-api-http中生成setting.yml文件
 
-5.修改配置以下设置 同时对应application.yml
+5.修改setting.yml配置以下设置 同时把bot的对应application.yml修改，保持默认就不用动
 ```properties
 adapters: 
   - http
