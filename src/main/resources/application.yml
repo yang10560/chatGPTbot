@@ -18,7 +18,7 @@ yeyu:
   #使用的模式 0为官方API (1为chatGPT 不推荐)
   model: 0
 
-  #API-KEY 使用官方模式时使用 请到官网获取key
+  #API-KEY 使用官方模式时使用 请到官网beta.openai.com/account/api-keys获取key
   apikey: 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
 
   #session-token 浏览器application中cookie获取__Secure-next-auth.session-token的值 不推荐
