@@ -169,15 +169,16 @@ public class DealMsgService {
                     break;
                 }
 
-                if (msg != null && !"".equals(msg) && msg.length() > 3) {
-                    if(msg.startsWith(robotConfig.getStartPrefix()))
-                    //加入OpenAI
-                    if (robotConfig.getModel() != 0) {
-                        chatService.chatGPT(msg.substring(robotConfig.getStartPrefix().length()), sender);
-                    } else {
-                        //model==0
-                        chatService.openAI(msg.substring(robotConfig.getStartPrefix().length()), sender);
-                    }
+                if (msg != null && !"".equals(msg) && msg.length() > 1) {
+                    log.info("accept msg:{}", msg);
+                    if (msg.startsWith(robotConfig.getStartPrefix()))
+                        //加入OpenAI
+                        if (robotConfig.getModel() != 0) {
+                            chatService.chatGPT(msg.substring(robotConfig.getStartPrefix().length()), sender);
+                        } else {
+                            //model==0
+                            chatService.openAI(msg.substring(robotConfig.getStartPrefix().length()), sender);
+                        }
                 }
 
             }

@@ -51,7 +51,7 @@ public class MsgJob {
             //处理信息
             dealMsgService.dealMsg(resp2);
         } catch (Exception e) {
-           log.error("msg job fail:{}",e.getMessage());
+           log.error("msg job fail,please check the http config:{}",e.getMessage());
 
         }
 
