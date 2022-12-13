@@ -96,11 +96,19 @@ nohup java -jar OpenAIbot-1.0-SNAPSHOT.jar >log.log 2>&1 &
 
 
 如果读不到配置文件就加上参数
-
-```shell
+```
+```
 
 jar -jar OpenAIbot-1.0-SNAPSHOT.jar --spring.config.location=application.yml的绝对路径
 ```
+
+
+！！！注意启动顺序。先配置并成功登录mirai 然后再启动OpenAIbot 
+因为它在启动时完成对mirai机器人的绑定。
+
+注意端口不要冲突。如果8082端口占用 请修改配置文件更换端口
+！！！
+
 #交流群
 
 249733992
