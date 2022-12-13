@@ -204,7 +204,7 @@ public class DealMsgService {
     private String getMenu() {
 
         return "------菜单-功能------\n" +
-                "在消息前加。号即可提问AI\n" +
+                "在消息前加" + robotConfig.getStartPrefix() + "号即可提问AI\n" +
                 "------夜雨------\n" +
                 "----Power By Mirai----";
 
