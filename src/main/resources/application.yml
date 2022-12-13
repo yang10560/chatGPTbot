@@ -5,9 +5,9 @@ yeyu:
 
   #Mirai的HTTPAPI的主机地址，本地为127.0.0.1
   host: 127.0.0.1
-  #MYQQHTTPAPI的端口
+  #HTTPAPI的端口
   port: 8082
-  #MYQQHTTPAPI的设置的token
+  #HTTPAPI的设置的token
   token: INITKEYbcupcF2N
   #机器人QQ
   robotQQ: 2452589763

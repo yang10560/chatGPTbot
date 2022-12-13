@@ -17,6 +17,10 @@ https://github.com/iTXTech/mirai-console-loader/releases
 下载jar并将其放入plugins文件夹中
 
 3.建议下载v2.5.0版本
+```
+https://github.com/project-mirai/mirai-api-http/releases/download/v2.5.0/mirai-api-http-v2.5.0.mirai.jar
+
+```
 
 4.关闭再次运行。会在config\net.mamoe.mirai-api-http中生成setting.yml文件
 
