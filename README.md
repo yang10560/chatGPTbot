@@ -112,3 +112,6 @@ jar -jar OpenAIbot-1.0-SNAPSHOT.jar --spring.config.location=application.yml的�
 #交流群
 
 249733992
+
+#关于测试
+机器人不会回复好友的，只会在回复群、因为发好友频繁容易冻结。
