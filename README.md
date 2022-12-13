@@ -93,8 +93,14 @@ jar -jar OpenAIbot-1.0-SNAPSHOT.jar
 #linux后台运行
 
 nohup java -jar OpenAIbot-1.0-SNAPSHOT.jar >log.log 2>&1 &
-```
 
+
+如果读不到配置文件就加上参数
+
+```shell
+
+jar -jar OpenAIbot-1.0-SNAPSHOT.jar --spring.config.location=application.yml的绝对路径
+```
 #交流群
 
 249733992
