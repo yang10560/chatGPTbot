@@ -23,6 +23,6 @@ public interface ChatService {
     void openAI(String msg, Sender sender);
 
 
-     void chatGPT(String msg, Sender sender);
+    // void chatGPT(String msg, Sender sender);
 
 }

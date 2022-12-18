@@ -115,7 +115,7 @@ public class HttpUtil {
      * @param requestBody
      * @return
      */
-    public static synchronized void chatGPT(String address, String userAgent, String cf,String sessionToken, RequestBody requestBody, Callback callback) {
+   /* public static synchronized void chatGPT(String address, String userAgent, String cf,String sessionToken, RequestBody requestBody, Callback callback) {
         final OkHttpClient client = new OkHttpClient.Builder()
                 .readTimeout(180, TimeUnit.SECONDS)
                 .connectTimeout(180, TimeUnit.SECONDS)
@@ -136,6 +136,6 @@ public class HttpUtil {
                 .build();
         client.newCall(request).enqueue(callback);
     }
-
+*/
 
 }

@@ -77,7 +77,7 @@ public class ChatServiceImpl implements ChatService {
 
 
     //chat-gpt
-   @Override
+  /* @Override
     public void chatGPT(String msg, Sender sender) {
 
         MediaType JSON = MediaType.parse("application/json");
@@ -132,5 +132,5 @@ public class ChatServiceImpl implements ChatService {
 
             }
         });
-    }
+    }*/
 }

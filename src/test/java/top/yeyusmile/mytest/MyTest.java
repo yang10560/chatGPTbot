@@ -14,6 +14,7 @@ import top.yeyusmile.mirai.Sender;
 import top.yeyusmile.service.ChatService;
 
 
+import top.yeyusmile.service.DealMsgService;
 import top.yeyusmile.utils.HttpUtil;
 
 import javax.annotation.PostConstruct;
@@ -57,7 +58,7 @@ public class MyTest {
         }
     }
 
-    @Test
+  /*  @Test
     public void test2(){
 
         chatService.chatGPT("你好",sender);
@@ -66,7 +67,7 @@ public class MyTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
 }

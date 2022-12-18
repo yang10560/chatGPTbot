@@ -61,6 +61,12 @@ public class RobotConfig {
     private String startPrefix;
 
 
+    private Integer autoagreeFriend;
+
+    private Integer  autoagreeGroup;
+
+
+
     /*mirai config start*/
 
     @PostConstruct
@@ -205,5 +211,22 @@ public class RobotConfig {
 
     public String getStartPrefix() {
         return startPrefix;
+    }
+
+
+    public Integer getAutoagreeFriend() {
+        return autoagreeFriend == null ? 0 : autoagreeFriend;
+    }
+
+    public void setAutoagreeFriend(Integer autoagreeFriend) {
+        this.autoagreeFriend = autoagreeFriend;
+    }
+
+    public Integer getAutoagreeGroup() {
+        return autoagreeGroup == null ? 0 : autoagreeGroup;
+    }
+
+    public void setAutoagreeGroup(Integer autoagreeGroup) {
+        this.autoagreeGroup = autoagreeGroup;
     }
 }
