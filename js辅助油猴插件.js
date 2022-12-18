@@ -2,11 +2,12 @@
 // @name         chatGPT机器人辅助插件
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  说明请看 https://github.com/yang10560/chatGPTbot/tree/v1.1
+// @description  由于chatgpt cloudflare限制，以前cookie方法已经失效、故采用挂浏览器js的回调的方法读取数据
 // @author       夜雨
 // @match        https://chat.openai.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=chat.openai.com
 // @grant        none
+// @license      MIT
 // ==/UserScript==
 
 (function() {
@@ -14,8 +15,10 @@
 	'use strict';
 
 	var sendURL = 'http://127.0.0.1:8087/msg/todo'; //发信地址
-	
+
 	var getQuestionURL = 'http://127.0.0.1:8087/msg/getQuestion';//收信地址
+
+	var gid = "";//gid
 
 	function initjob() {
 		console.log("开始任务...")
@@ -38,8 +41,13 @@
 				if (xhr.status === 200) {
 					console.log(xhr.responseText);
 					//TODO 服务器获取内容
-					var msg = xhr.responseText;
-					if (msg == undefined || msg == "no" || msg == "") {
+					var retData = JSON.parse(xhr.responseText);
+					var msg = retData.question;
+					gid = retData.gid;
+					//console.log(gid)
+					//console.log(msg)
+					if (msg == undefined || msg == "no" || msg == "" || msg == "。" || msg == "。。"
+						|| msg == "。。。" || msg == "。。。。"){
 						console.log("信息为空,10秒后继续任务1")
 						setTimeout(initjob, 10000)
 						return
@@ -50,7 +58,7 @@
 						return
 					}
 					document.querySelector("textarea").value = msg
-					
+
 					if(!document.querySelectorAll("button.absolute")[0]){
 						console.log("button不存在,10秒后继续任务")
 						setTimeout(initjob, 10000)
@@ -61,19 +69,20 @@
 
 					var flag = false;
 					var times = 0;//超时设置
-					
+
 					//监控
 					var myJob = setInterval(function() {
 						times++;
 						console.log("等待完成....");
-						if (document.querySelectorAll("svg.h-3.w-3")[0] || times > 36 
-						|| (!document.querySelectorAll("button.absolute")[0].hasAttribute("disabled")) ) {
+						if (document.querySelectorAll("svg.h-3.w-3")[0] || times > 36
+							|| (!document.querySelectorAll("button.absolute")[0].hasAttribute("disabled")) ) {
 							console.log("输入完成")
 							//TODO 发送内容
 							try {
 								if (!document.querySelectorAll("div.markdown")[0]) {
 									sendGetRequest(sendURL, JSON.stringify({
-										anser: "请求失败,你重试"
+										anser: "请求失败,你重试",
+										gid : gid
 									}));
 									location.reload()
 								}
@@ -81,7 +90,8 @@
 								//senderMsg(document.querySelectorAll("div.markdown")[0].innerText)
 								let text = document.querySelectorAll("div.markdown")[0].innerText;
 								sendGetRequest(sendURL, JSON.stringify({
-									anser: text
+									anser: text,
+									gid : gid
 								}));
 							} finally {
 								clearInterval(myJob)
@@ -97,7 +107,8 @@
 					console.error('请求失败：' + xhr.status);
 					console.error("请求信息失败，10秒后继续任务")
 					sendGetRequest(sendURL, JSON.stringify({
-						anser: "请求失败,你重试"
+						anser: "请求失败,你重试",
+						gid : gid
 					}));
 					location.reload()
 					clearInterval(myJob)

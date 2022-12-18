@@ -15,7 +15,9 @@ import top.yeyusmile.common.QuestionQuen;
 import top.yeyusmile.mirai.msg.PlainMsg;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 收发信端
@@ -38,14 +40,20 @@ public class CallbackController {
     private QuestionQuen questionQuen;
 
     /**
-     * 从队列取一个问题。取不到返回no
+     * 从队列取一个问题。取不到返回群id和问题
      * @return
      */
     @RequestMapping("/getQuestion")
     @ResponseBody
-    public String getQuestion() {
+    public Map<String, String> getQuestion() {
 
-        if (questionQuen.isEmpty()) return "no";
+        Map<String, String> map = new HashMap<>();
+
+        if (questionQuen.isEmpty()) {
+            map.put("question", "");
+            map.put("gid", "");
+            return map;
+        }
         String ret = "no";
         try {
             ret = questionQuen.get().getMsg();
@@ -55,29 +63,38 @@ public class CallbackController {
 
         log.info(TAG + "Question:{}", ret);
 
-        return ret == null ? "no" : ret;
+        if (ret == null) {
+            map.put("question", "");
+            map.put("gid", "");
+            return map;
+        }
+
+        map.put("question", ret);
+        map.put("gid", questionQuen.getCurrentMyPair().getSender().getGroup().getId().toString());
+        return map;
+
     }
 
 
     /**
      * 将问题的答案给收信者
-     * @param anser
+     * @param rawJson
      * @return
      */
     @RequestMapping("/todo")
     @ResponseBody
-    public String todo(@RequestBody String anser) {
+    public String todo(@RequestBody String rawJson) {
 
-        log.info(TAG + "答案:{}", anser);
+        log.info(TAG + "rawJson:{}", rawJson);
         JsonParser jsonParser = new JsonParser();
-        JsonElement element = jsonParser.parse(anser);
+        JsonElement element = jsonParser.parse(rawJson);
         JsonObject root = element.getAsJsonObject();
         String text = root.get("anser").getAsString();
+        Long gid = root.get("gid").getAsLong();
         List<Object> params = new ArrayList<>();
         params.add(new PlainMsg(text));
-        log.info("sender：{}", questionQuen.getCurrentMyPair().getSender());
-        myTemplate.sendMsg2Group(params, null, questionQuen.getCurrentMyPair().
-                getSender().getGroup().getId());
+        log.info("gid：{}", gid);
+        myTemplate.sendMsg2Group(params, null, gid);
         return "success";
     }
 
