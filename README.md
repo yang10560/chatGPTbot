@@ -6,7 +6,7 @@
 # v1.1版说明
 由于chatgpt cloudflare限制，以前cookie方法已经失效、故采用挂浏览器js的回调的方法读取数据
 
-缺点：不支持linux部署，bug有点多, 网页不稳定会导致消息容易丢失
+缺点：不支持linux部署，bug有点多, 网页不稳定会导致消息容易丢失。要额外挂浏览器
 
 优点：又不是不能用
 
@@ -14,7 +14,7 @@
 
 1.安装油猴js机器人辅助插件【请自建js插件或在线安装】
 
-在线安装地址：
+在线安装地址：https://greasyfork.org/zh-CN/scripts/456754-chatgpt%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BE%85%E5%8A%A9%E6%8F%92%E4%BB%B6
 
 2.修改js网址，application.yml的服务端口对应
 
