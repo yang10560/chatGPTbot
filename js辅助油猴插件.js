@@ -42,8 +42,12 @@
 				if (xhr.status === 200) {
 					console.log(xhr.responseText);
 					//TODO 服务器获取内容
-					var retData = JSON.parse(xhr.responseText);
-					console.log(xhr.responseText);
+					try{
+						var retData = JSON.parse(xhr.responseText);
+					}catch(e){
+						retData = xhr.responseText;
+						//TODO handle the exception
+					}
 					var msg = retData;//兼容旧版本
 					if(retData.gid){
 						msg = retData.question;
