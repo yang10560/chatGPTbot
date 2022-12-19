@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         chatGPT机器人辅助插件
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  由于chatgpt cloudflare限制，以前cookie方法已经失效、故采用挂浏览器js的回调的方法读取数据
 // @author       夜雨
 // @match        https://chat.openai.com/*
