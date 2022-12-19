@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         chatGPT机器人辅助插件
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.3
 // @description  由于chatgpt cloudflare限制，以前cookie方法已经失效、故采用挂浏览器js的回调的方法读取数据
 // @author       夜雨
 // @match        https://chat.openai.com/*
@@ -24,7 +24,8 @@
 		console.log("开始任务...")
 		//清空
 		try {
-			document.querySelectorAll("a.flex")[0].click()
+			let newchat = document.querySelectorAll("a.flex")[0] || document.querySelectorAll("button.px-3")[0]
+			newchat.click()
 		} catch (e) {
 			//TODO handle the exception
 			location.reload()
@@ -48,7 +49,7 @@
 					//console.log(msg)
 					if (msg == undefined || msg == "no" || msg == "" || msg == "。" || msg == "。。"
 						|| msg == "。。。" || msg == "。。。。"){
-						console.log("信息为空,10秒后继续任务1")
+						console.log("信息为空,10秒后继续任务")
 						setTimeout(initjob, 10000)
 						return
 					}
