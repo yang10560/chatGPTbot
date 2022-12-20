@@ -15,10 +15,10 @@ yeyu:
   robotQQ: 2452589763
 
   #触发前缀关键字 支持多关键字 以|分开 如: 。|wq|abc
-  startPrefix: 。
+  startPrefix: 。|wq|/|小明|真寻
 
   #使用的模式 0为官方API 1为chatGPT 2为免费API
-  model: 1
+  model: 2
 
   #API-KEY 使用官方模式时使用 请到官网beta.openai.com/account/api-keys获取key
   apikey: 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
