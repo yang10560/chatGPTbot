@@ -3,6 +3,11 @@
 # 本插件不回好友！只会回群消息
 如要支持好友自行修改源码的dealFriendMsg方法
 
+# v1.3版说明
+1。支持多触发词
+2。新增新增免费api,免KEY。设置yml中的（model=2)
+
+
 # v1.1版说明
 由于chatgpt cloudflare限制，以前cookie方法已经失效、故采用挂浏览器js的回调的方法读取数据
 
