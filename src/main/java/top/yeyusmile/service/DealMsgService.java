@@ -185,7 +185,7 @@ public class DealMsgService {
                                 questionQuen.add(sender, msg.substring(robotConfig.prefixLength(msg)).trim());
                                 break;
                             ////model=1   chatgpt
-                            case 3:
+                            case 2:
                                 //model=2   免费Api
                                 chatService.freeChatAPI(msg,sender);
                                 break;
