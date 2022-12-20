@@ -229,4 +229,22 @@ public class RobotConfig {
     public void setAutoagreeGroup(Integer autoagreeGroup) {
         this.autoagreeGroup = autoagreeGroup;
     }
+
+
+    public boolean isPrefix(String str){
+        String[] split = startPrefix.split("\\|");
+        for (String s : split) {
+            if(str.startsWith(s)) return true;
+        }
+        return false;
+    }
+
+    public int prefixLength(String str){
+        String[] split = startPrefix.split("\\|");
+        for (String s : split) {
+            if(str.startsWith(s)) return s.length();
+        }
+        return 0;
+    }
+
 }

@@ -175,16 +175,20 @@ public class DealMsgService {
 
                 if (msg != null && !"".equals(msg) && msg.length() > 1) {
                     log.info("accept from {}-{} msg:{}", sender.getId(), sender.getMemberName(), msg);
-                    if (msg.startsWith(robotConfig.getStartPrefix())){
+                    if (robotConfig.isPrefix(msg)){
                         switch (robotConfig.getModel()){
                             case 0:
-                                chatService.openAI(msg.substring(robotConfig.getStartPrefix().length()).trim(), sender);
+                                chatService.openAI(msg.substring(robotConfig.prefixLength(msg)).trim(), sender);
                                 break;
                             //model==0   openai
                             case 1:
-                                questionQuen.add(sender, msg.substring(robotConfig.getStartPrefix().length()).trim());
+                                questionQuen.add(sender, msg.substring(robotConfig.prefixLength(msg)).trim());
                                 break;
                             ////model=1   chatgpt
+                            case 3:
+                                //model=2   免费Api
+                                chatService.freeChatAPI(msg,sender);
+                                break;
                             default:
                         }
                     }

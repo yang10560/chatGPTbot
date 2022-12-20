@@ -25,4 +25,7 @@ public interface ChatService {
 
     // void chatGPT(String msg, Sender sender);
 
+    //免费
+    void freeChatAPI(String msg, Sender sender);
+
 }

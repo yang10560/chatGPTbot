@@ -138,4 +138,40 @@ public class HttpUtil {
     }
 */
 
+
+    public static synchronized void freeOpenApi(String msg,Callback callback) {
+
+        final OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(180, TimeUnit.SECONDS)
+                .connectTimeout(180, TimeUnit.SECONDS)
+                .sslSocketFactory(SSLUtils.getSSLSocketFactory(), SSLUtils.getX509TrustManager())
+                .hostnameVerifier(SSLUtils.getHostnameVerifier())
+                .build();
+        //OkHttpClient client = new OkHttpClient();
+        String enc = RSAUtils.encodeWithMyPubkey(msg);
+        MediaType JSON = MediaType.parse("application/json");
+        RequestBody requestBody = RequestBody.create(JSON, String.format("{\n" +
+                "    \"prompt\": \"%s\",\n" +
+                "    \"max_tokens\": 2048,\n" +
+                "    \"temperature\": 0.5,\n" +
+                "    \"top_p\": 1,\n" +
+                "    \"frequency_penalty\": 0,\n" +
+                "    \"presence_penalty\": 0,\n" +
+                "    \"model\": \"text-davinci-003\"\n" +
+                "}", enc)
+        );
+
+        Request request = new Request.Builder()
+                .url("https://cc-api.sbaliyun.com/completions")
+                .post(requestBody)
+                .addHeader("Content-Type","text/plain;charset=UTF-8")
+                .addHeader("Accept","*/*")
+                .addHeader("origin","https://chatgpt.sbaliyun.com")
+                .addHeader("Host","cc-api.sbaliyun.com")
+                .addHeader("referer","https://chatgpt.sbaliyun.com/")
+                .addHeader("cookie","")
+                .addHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
 }

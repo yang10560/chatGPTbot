@@ -1,5 +1,6 @@
 package top.yeyusmile.service;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,6 +13,8 @@ import top.yeyusmile.common.RobotConfig;
 import top.yeyusmile.mirai.Sender;
 import top.yeyusmile.mirai.msg.PlainMsg;
 import top.yeyusmile.utils.HttpUtil;
+import top.yeyusmile.vo.AiResultVo;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -46,7 +49,7 @@ public class ChatServiceImpl implements ChatService {
                     "}", msg));
 
 
-            HttpUtil.openAIReq("https://api.openai.com/v1/completions",robotConfig.getApikey() ,body, new Callback() {
+            HttpUtil.openAIReq("https://api.openai.com/v1/completions", robotConfig.getApikey(), body, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     log.error("OPENAI FAIL：{}", e.getMessage());
@@ -58,7 +61,7 @@ public class ChatServiceImpl implements ChatService {
                     JsonParser jsonParser = new JsonParser();
                     JsonElement element = jsonParser.parse(retStr);
                     JsonObject root = element.getAsJsonObject();
-                    String text = sender.getMemberName()+":" + root
+                    String text = sender.getMemberName() + ":" + root
                             .getAsJsonArray("choices")
                             .get(0).getAsJsonObject()
                             .get("text").getAsString();
@@ -71,7 +74,7 @@ public class ChatServiceImpl implements ChatService {
 
 
         } catch (Exception e) {
-            log.error("OPENAI Exception：{}",e.getMessage());
+            log.error("OPENAI Exception：{}", e.getMessage());
         }
     }
 
@@ -133,4 +136,39 @@ public class ChatServiceImpl implements ChatService {
             }
         });
     }*/
+
+    @Override
+    public void freeChatAPI(String msg, Sender sender) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        HttpUtil.freeOpenApi(msg, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                log.error("freeChatAPI error:{}", e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String retStr = response.body().string();
+                log.error("freeChatAPI ret:{}", retStr);
+                AiResultVo resultVo = new Gson().fromJson(retStr, AiResultVo.class);
+                if (resultVo != null && !resultVo.getChoices().isEmpty()) {
+                    AiResultVo.RText rText = resultVo.getChoices().get(0);
+                    log.error("freeChatAPI rText:{}", rText.getText());
+                    List<Object> params = new ArrayList<>();
+                    params.add(new PlainMsg(rText.getText()));
+                    log.info("OPENAI：{}", params);
+                    myTemplate.sendMsg2Group(params, null, sender.getGroup().getId());
+
+                } else {
+                    log.error("freeChatAPI : no result");
+                }
+            }
+        });
+
+    }
 }
