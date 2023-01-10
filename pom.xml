@@ -6,7 +6,7 @@
 
     <groupId>top.yeyusmile</groupId>
     <artifactId>OpenAIbot</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

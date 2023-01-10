@@ -161,7 +161,7 @@ public class ChatServiceImpl implements ChatService {
                     log.error("freeChatAPI rText:{}", rText.getText());
                     List<Object> params = new ArrayList<>();
                     params.add(new PlainMsg(rText.getText()));
-                    log.info("OPENAI：{}", params);
+                    log.info("freeChatAPI：{}", params);
                     myTemplate.sendMsg2Group(params, null, sender.getGroup().getId());
 
                 } else {
