@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.yeyusmile.common.MsgType;
 import top.yeyusmile.common.MyTemplate;
+import top.yeyusmile.common.QuestionQuen;
 import top.yeyusmile.common.RobotConfig;
 import top.yeyusmile.mirai.AddReq;
 import top.yeyusmile.mirai.Sender;
@@ -42,6 +43,9 @@ public class DealMsgService {
     @Autowired
     private ChatService chatService;
 
+    @Autowired
+    private QuestionQuen questionQuen;//chatgpt问题队列
+
 
     /**
      * @param raw 源数据
@@ -74,7 +78,7 @@ public class DealMsgService {
             }
 
             if (msgChainType.contains(MsgType.MSGTYPE_FRIEDN)) {//好友消息
-                dealFrindMsg(sender, obj);
+                dealFriendMsg(sender, obj);
 
             }
 
@@ -102,7 +106,7 @@ public class DealMsgService {
      */
     private void BotInvitedJoinGroupRequestEvent(JsonObject obj) {
         AddReq beInvitedGroupReq = gson.fromJson(obj, AddReq.class);
-        beInvitedGroupReq.setOperate(0);//同意
+        beInvitedGroupReq.setOperate(robotConfig.getAutoagreeGroup());//同意
         beInvitedGroupReq.setSessionKey(robotConfig.getSessionKey());
         myTemplate.opBeinviteGrop(beInvitedGroupReq);
     }
@@ -114,7 +118,7 @@ public class DealMsgService {
      */
     private void NewFriendRequestEvent(JsonObject obj) {
         AddReq addFriendReq = gson.fromJson(obj, AddReq.class);
-        addFriendReq.setOperate(0);//同意
+        addFriendReq.setOperate(robotConfig.getAutoagreeFriend());//同意
         addFriendReq.setSessionKey(robotConfig.getSessionKey());
         myTemplate.opNewFried(addFriendReq);
 
@@ -170,15 +174,25 @@ public class DealMsgService {
                 }
 
                 if (msg != null && !"".equals(msg) && msg.length() > 1) {
-                    log.info("accept msg:{}", msg);
-                    if (msg.startsWith(robotConfig.getStartPrefix()))
-                        //加入OpenAI
-                        if (robotConfig.getModel() != 0) {
-                            chatService.chatGPT(msg.substring(robotConfig.getStartPrefix().length()), sender);
-                        } else {
-                            //model==0
-                            chatService.openAI(msg.substring(robotConfig.getStartPrefix().length()), sender);
+                    log.info("accept from {}-{} msg:{}", sender.getId(), sender.getMemberName(), msg);
+                    if (robotConfig.isPrefix(msg)){
+                        switch (robotConfig.getModel()){
+                            case 0:
+                                chatService.openAI(msg.substring(robotConfig.prefixLength(msg)).trim(), sender);
+                                break;
+                            //model==0   openai
+                            case 1:
+                                questionQuen.add(sender, msg.substring(robotConfig.prefixLength(msg)).trim());
+                                break;
+                            ////model=1   chatgpt
+                            case 2:
+                                //model=2   免费Api
+                                chatService.freeChatAPI(msg,sender);
+                                break;
+                            default:
                         }
+                    }
+
                 }
 
             }
@@ -194,7 +208,7 @@ public class DealMsgService {
      * @param sender
      * @param obj
      */
-    private void dealFrindMsg(Sender sender, JsonObject obj) {
+    private void dealFriendMsg(Sender sender, JsonObject obj) {
         // List<Object> params = new ArrayList<>();
         //params.add(new PlainMsg("不再处理好友消息。只处理群信息"));
         // myTemplate.sendMsg2Friend(params, null, sender.getId());

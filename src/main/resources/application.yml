@@ -1,34 +1,51 @@
 server:
-  #服务端端口
+  #服务端端口,用于对接js用
   port: 8087
 yeyu:
 
-  #Mirai的HTTPAPI的主机地址，本地为127.0.0.1
+  #【注意】所有key前面有一个空格
+  #bot-http插件的地址，本地为127.0.0.1
   host: 127.0.0.1
-  #HTTPAPI的端口
+  #bot-http插件的端口
   port: 8082
-  #HTTPAPI的设置的token
+  #bot-http插件的设置的token,请勿与openai的API-KEY搞混
+  #详情config\net.mamoe.mirai-api-http中生成setting.yml
   token: INITKEYbcupcF2N
   #机器人QQ
   robotQQ: 2452589763
 
-  #触发前缀
-  startPrefix: 。
+  #触发前缀关键字 支持多关键字 以|分开 如: 。|wq|abc
+  startPrefix: 。|wq|/|小明|真寻
 
-  #使用的模式 0为官方API (1为chatGPT 不推荐)
-  model: 0
+  #使用的模式 0为官方API 1为chatGPT 2为免费API
+  model: 2
 
   #API-KEY 使用官方模式时使用 请到官网beta.openai.com/account/api-keys获取key
   apikey: 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
 
-  #session-token 浏览器application中cookie获取__Secure-next-auth.session-token的值 不推荐
+  #session-token(已失效，勿动)
   sessionToken: eyJhb....
 
   #userAent
   userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36
 
-  #cloudfare cookie 浏览器application中cookie获取cf_clearance的值
-  cf: nxhH2zLTn1oDqTInOGj3wmGGFlbhiZOcl.CEXlOyK1k-1670916726-0-1-97d62ec.aa68b07b.5e7c3d0c-160
+  #cloudfare (已失效，勿动)
+  cf: nxhH2zLTn...
+
+  #是否同意自动加友
+  # 0	同意添加好友
+  # 1	拒绝添加好友
+  # 2	拒绝添加好友并添加黑名单，不再接收该用户的好友申请
+  autoagreeFriend: 0
+
+  #是否同意自动加群
+  #0	同意邀请
+  #1	拒绝邀请
+  autoagreeGroup: 0
+
+
+
+
 
 
 

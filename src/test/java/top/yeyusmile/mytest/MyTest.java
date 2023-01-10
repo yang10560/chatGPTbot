@@ -1,6 +1,8 @@
 package top.yeyusmile.mytest;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import okhttp3.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,14 @@ import top.yeyusmile.mirai.Sender;
 import top.yeyusmile.service.ChatService;
 
 
+import top.yeyusmile.service.DealMsgService;
 import top.yeyusmile.utils.HttpUtil;
+import top.yeyusmile.utils.RSAUtils;
+import top.yeyusmile.vo.AiResultVo;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -28,7 +34,6 @@ import java.io.UnsupportedEncodingException;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MainApp.class)
 public class MyTest {
-
 
 
     @Autowired
@@ -47,9 +52,9 @@ public class MyTest {
     }
 
     @Test
-    public void test1(){
+    public void test1() {
 
-        chatService.openAI("java实现冒泡排序",sender);
+        chatService.openAI("java实现冒泡排序", sender);
         try {
             Thread.sleep(480000);
         } catch (InterruptedException e) {
@@ -57,7 +62,7 @@ public class MyTest {
         }
     }
 
-    @Test
+  /*  @Test
     public void test2(){
 
         chatService.chatGPT("你好",sender);
@@ -66,7 +71,21 @@ public class MyTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
+    //免费api测试
+    @Test
+    public void test2() {
+
+
+       chatService.freeChatAPI("你好",sender);
+
+        try {
+            Thread.sleep(250000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
