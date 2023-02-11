@@ -6,7 +6,7 @@
 
     <groupId>top.yeyusmile</groupId>
     <artifactId>OpenAIbot</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.5-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -19,6 +19,13 @@
     </properties>
 
    <dependencies>
+
+       <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16 -->
+       <dependency>
+           <groupId>org.bouncycastle</groupId>
+           <artifactId>bcprov-jdk16</artifactId>
+           <version>1.46</version>
+       </dependency>
 
 
        <dependency>

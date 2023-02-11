@@ -28,4 +28,8 @@ public interface ChatService {
     //免费
     void freeChatAPI(String msg, Sender sender);
 
+    //https://chatgpt.glimpse.top/requestChat?question=%0A%0A%E4%BD%A0%E5%A5%BD&openid=
+
+    void xcAI(String msg, Sender sender);
+
 }

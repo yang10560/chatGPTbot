@@ -189,6 +189,12 @@ public class DealMsgService {
                                 //model=2   免费Api
                                 chatService.freeChatAPI(msg,sender);
                                 break;
+
+                            case 3:
+                                //mode =3
+                                chatService.xcAI(msg.substring(robotConfig.prefixLength(msg)).trim(),sender);
+                                break;
+
                             default:
                         }
                     }

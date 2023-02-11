@@ -36,6 +36,9 @@ public class HttpUtil {
                 .url(address)
                 .post(requestBody)
                 .addHeader("user-agent", userAgent)
+                .addHeader("accept", "application/json, text/javascript, */*; q=0.01")
+                .addHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8")
+                .addHeader("origin", "https://jx.xmflv.com")
                 .build();
 
         String ret = "";
@@ -56,10 +59,13 @@ public class HttpUtil {
      * @return
      */
     public static synchronized String synHttpGet(String address, String cookie, String userAgent) {
-
-        OkHttpClient client = new OkHttpClient();
+        final OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .build();
         client.dispatcher().setMaxRequests(3000);
         client.dispatcher().setMaxRequestsPerHost(1000);
+
         Request request = new Request.Builder()
                 .url(address)
                 .addHeader("cookie", cookie)
@@ -139,12 +145,14 @@ public class HttpUtil {
 */
     public static synchronized void freeOpenApi(String msg, Callback callback) {
 
+
         final OkHttpClient client = new OkHttpClient.Builder()
                 .readTimeout(180, TimeUnit.SECONDS)
                 .connectTimeout(180, TimeUnit.SECONDS)
                 .sslSocketFactory(SSLUtils.getSSLSocketFactory(), SSLUtils.getX509TrustManager())
                 .hostnameVerifier(SSLUtils.getHostnameVerifier())
                 .build();
+
         //OkHttpClient client = new OkHttpClient();
         //String enc = RSAUtils.encodeWithMyPubkey(msg);
         String key = "L#$@XowPu!uZ&c%u";
@@ -175,6 +183,25 @@ public class HttpUtil {
                 .addHeader("referer", "https://chatgpt.sbaliyun.com/")
                 .addHeader("cookie", "")
                 .addHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+
+    public static synchronized void xcAI(String url, Callback callback) {
+
+
+        final OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(180, TimeUnit.SECONDS)
+                .connectTimeout(180, TimeUnit.SECONDS)
+                .sslSocketFactory(SSLUtils.getSSLSocketFactory(), SSLUtils.getX509TrustManager())
+                .hostnameVerifier(SSLUtils.getHostnameVerifier())
+                .build();
+
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6398")
                 .build();
         client.newCall(request).enqueue(callback);
     }

@@ -25,6 +25,10 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author 夜雨
@@ -46,7 +50,7 @@ public class MyTest {
         Sender sender = new Sender();
         sender.setId(29491242l);
         Group group = new Group();
-        group.setId(819951835l);
+        group.setId(249733992l);
         sender.setGroup(group);
         this.sender = sender;
     }
@@ -79,6 +83,21 @@ public class MyTest {
 
 
        chatService.freeChatAPI("你好",sender);
+
+        try {
+            Thread.sleep(250000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //xcAI
+    @Test
+    public void test3() {
+
+
+        chatService.xcAI("你好",sender);
 
         try {
             Thread.sleep(250000);
