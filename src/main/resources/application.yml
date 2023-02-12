@@ -1,6 +1,6 @@
 server:
   #服务端端口,用于对接js用
-  port: 8087
+  port: 8089
 yeyu:
 
   #【注意】所有key前面有一个空格
@@ -15,10 +15,10 @@ yeyu:
   robotQQ: 2452589763
 
   #触发前缀关键字 支持多关键字 以|分开 如: 。|wq|abc
-  startPrefix: 。|wq|/|小明|真寻
+  startPrefix: 。|wq|/|小明|你|我
 
-  #使用的模式 0为官方API 1为chatGPT 2为免费API 3xc-gpt接口
-  model: 3
+  #使用的模式 0为官方API 1为chatGPT 2为免费API 3xc-gpt接口 4 chat.forchange.cn
+  model: 4
 
   #API-KEY 使用官方模式时使用 请到官网beta.openai.com/account/api-keys获取key
   apikey: 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

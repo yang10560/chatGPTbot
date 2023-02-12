@@ -184,10 +184,10 @@ public class ChatServiceImpl implements ChatService {
 
         String url = "https://chatgpt.glimpse.top/requestChat?question=" + URLEncoder.encode(msg.trim()) + "&openid=";
         log.info("xcAi start :{}", msg);
-        String rText = HttpUtil.synHttpGet(url,"","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6398");
+        String rText = HttpUtil.synHttpGet(url, "", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6398");
         log.info("xcAi resp:{}", rText);
 
-        if (rText != null && rText.length() > 0){
+        if (rText != null && rText.length() > 0) {
             List<Object> params = new ArrayList<>();
             params.add(new PlainMsg(rText));
             log.info("xcAi send：{}", params);
@@ -216,6 +216,44 @@ public class ChatServiceImpl implements ChatService {
         });*/
 
 
+    }
 
+    @Override
+    public void forchangeAI(String msg, Sender sender) {
+        try {
+
+            MediaType JSON = MediaType.parse("application/json");
+            String format = String.format("{\"prompt\":\"Human:%s\\nAI:\",\"tokensLength\":%s}",
+                    msg, msg.length() + 10);
+            RequestBody body = RequestBody.create(JSON, format);
+            log.info("forchangeAI json:{}", format);
+
+            HttpUtil.forchangeAI("https://api.forchange.cn/", body, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    log.error("forchangeAI FAIL：{}", e.getMessage());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String retStr = response.body().string();
+                    JsonParser jsonParser = new JsonParser();
+                    JsonElement element = jsonParser.parse(retStr);
+                    JsonObject root = element.getAsJsonObject();
+                    String text = sender.getMemberName() + ":" + root
+                            .getAsJsonArray("choices")
+                            .get(0).getAsJsonObject()
+                            .get("text").getAsString();
+                    List<Object> params = new ArrayList<>();
+                    params.add(new PlainMsg(text));
+                    log.info("forchangeAI：{}", params);
+                    myTemplate.sendMsg2Group(params, null, sender.getGroup().getId());
+                }
+            });
+
+
+        } catch (Exception e) {
+            log.error("forchangeAI Exception：{}", e.getMessage());
+        }
     }
 }

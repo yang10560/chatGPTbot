@@ -194,6 +194,10 @@ public class DealMsgService {
                                 //mode =3
                                 chatService.xcAI(msg.substring(robotConfig.prefixLength(msg)).trim(),sender);
                                 break;
+                            case 4:
+                                //mode =4
+                                chatService.forchangeAI(msg.substring(robotConfig.prefixLength(msg)).trim(),sender);
+                                break;
 
                             default:
                         }

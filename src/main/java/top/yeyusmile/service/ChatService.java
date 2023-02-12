@@ -32,4 +32,5 @@ public interface ChatService {
 
     void xcAI(String msg, Sender sender);
 
+    void forchangeAI(String trim, Sender sender);
 }

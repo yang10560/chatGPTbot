@@ -117,8 +117,8 @@ public class HttpUtil {
     /**
      * chat-gpt
      *
-     * @param address
-     * @param requestBody
+     * @param
+     * @param
      * @return
      */
    /* public static synchronized void chatGPT(String address, String userAgent, String cf,String sessionToken, RequestBody requestBody, Callback callback) {
@@ -204,5 +204,26 @@ public class HttpUtil {
                 .addHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6398")
                 .build();
         client.newCall(request).enqueue(callback);
+    }
+
+    public static synchronized void forchangeAI(String address, RequestBody requestBody, Callback callback) {
+        final OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .sslSocketFactory(SSLUtils.getSSLSocketFactory(), SSLUtils.getX509TrustManager())
+                .hostnameVerifier(SSLUtils.getHostnameVerifier())
+                .build();
+        //OkHttpClient client = new OkHttpClient();
+        client.dispatcher().setMaxRequests(3000);
+        client.dispatcher().setMaxRequestsPerHost(1000);
+        Request request = new Request.Builder()
+                .url(address)
+                .post(requestBody)
+                .addHeader("Content-Type", "application/json")
+                //.addHeader("Authorization","Bearer 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") //我的
+                //  .addHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
+                .build();
+        client.newCall(request).enqueue(callback);
+
     }
 }

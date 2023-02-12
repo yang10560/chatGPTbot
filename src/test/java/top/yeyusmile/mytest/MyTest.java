@@ -107,4 +107,18 @@ public class MyTest {
 
     }
 
+    @Test
+    public void forchangeAITest() {
+
+
+        chatService.forchangeAI("你好",sender);
+
+        try {
+            Thread.sleep(250000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
