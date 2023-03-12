@@ -192,7 +192,7 @@ public class DealMsgService {
 
                             case 3:
                                 //mode =3
-                                chatService.xcAI(msg.substring(robotConfig.prefixLength(msg)).trim(),sender);
+                                chatService.wxchatgpt(msg.substring(robotConfig.prefixLength(msg)).trim(),sender);
                                 break;
                             case 4:
                                 //mode =4

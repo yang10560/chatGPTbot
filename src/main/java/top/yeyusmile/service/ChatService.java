@@ -28,9 +28,8 @@ public interface ChatService {
     //免费
     void freeChatAPI(String msg, Sender sender);
 
-    //https://chatgpt.glimpse.top/requestChat?question=%0A%0A%E4%BD%A0%E5%A5%BD&openid=
-
-    void xcAI(String msg, Sender sender);
+    //"https://wenxin110.top/api/chat_gpt?text=" + encodeURI(q)
+    void wxchatgpt(String msg, Sender sender);
 
     void forchangeAI(String trim, Sender sender);
 }

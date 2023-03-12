@@ -1,8 +1,5 @@
 package top.yeyusmile.mytest;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
-import okhttp3.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +13,7 @@ import top.yeyusmile.mirai.Sender;
 import top.yeyusmile.service.ChatService;
 
 
-import top.yeyusmile.service.DealMsgService;
-import top.yeyusmile.utils.HttpUtil;
-import top.yeyusmile.utils.RSAUtils;
-import top.yeyusmile.vo.AiResultVo;
-
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author 夜雨
@@ -92,12 +77,12 @@ public class MyTest {
 
     }
 
-    //xcAI
+    //wxchat
     @Test
     public void test3() {
 
 
-        chatService.xcAI("你好",sender);
+        chatService.wxchatgpt("你好",sender);
 
         try {
             Thread.sleep(250000);

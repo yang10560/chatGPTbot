@@ -174,7 +174,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void xcAI(String msg, Sender sender) {
+    public void wxchatgpt(String msg, Sender sender) {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -182,15 +182,20 @@ public class ChatServiceImpl implements ChatService {
         }
 
 
-        String url = "https://chatgpt.glimpse.top/requestChat?question=" + URLEncoder.encode(msg.trim()) + "&openid=";
-        log.info("xcAi start :{}", msg);
+        String url = "https://wenxin110.top/api/chat_gpt?text=" + URLEncoder.encode(msg.trim());
+        log.info("wxchat start :{}", msg);
         String rText = HttpUtil.synHttpGet(url, "", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF XWEB/6398");
-        log.info("xcAi resp:{}", rText);
+        log.info("wxchat resp:{}", rText);
 
         if (rText != null && rText.length() > 0) {
+            JsonParser jsonParser = new JsonParser();
+            JsonElement element = jsonParser.parse(rText);
+            JsonObject root = element.getAsJsonObject();
+            String text = sender.getMemberName() + ":" + root
+                    .get("text").getAsString();
             List<Object> params = new ArrayList<>();
-            params.add(new PlainMsg(rText));
-            log.info("xcAi send：{}", params);
+            params.add(new PlainMsg(text));
+            log.info("wxchat send：{}", params);
             myTemplate.sendMsg2Group(params, null, sender.getGroup().getId());
         }
 
